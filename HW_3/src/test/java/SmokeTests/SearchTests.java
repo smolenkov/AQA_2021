@@ -7,8 +7,8 @@ import static org.testng.Assert.assertTrue;
 
 public class SearchTests extends BaseTest{
 
-    private String SEARCH_KEYWORD = "samsung";
-    private String EXPECTED_SEARCH_QUERY = "query=samsung";
+    private final String SEARCH_KEYWORD = "samsung";
+    private final String EXPECTED_SEARCH_QUERY = "query=samsung";
     Integer minPrice, nextPrice;
 
 
@@ -36,7 +36,6 @@ public class SearchTests extends BaseTest{
         getSearchPage().implicitWait(10);
         getSearchPage().clickToSortedASC();
         getSearchPage().implicitWait(10);
-        Thread.sleep(5000);
         minPrice = Integer.parseInt(getSearchPage().getMinPriceSamsungPhone().replaceAll("[^0-9]", ""));
         nextPrice = Integer.parseInt(getSearchPage().getNextPriceSamsungPhone().replaceAll("[^0-9]", ""));
         assertTrue(minPrice <= nextPrice);
