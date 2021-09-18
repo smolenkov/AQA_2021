@@ -4,6 +4,7 @@ package stepdefinitions;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
+import io.cucumber.java.en.When;
 import manager.PageFactoryManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -25,6 +26,7 @@ public class DefinitionStep {
     SearchResultPage searchResultPage;
     ProductPage productPage;
     PageFactoryManager pageFactoryManager;
+    Float firstPrice, secondPrice;
 
     @Before
     public void testsSetUp() {
@@ -66,8 +68,41 @@ public class DefinitionStep {
         homePage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
         homePage.isSearchFieldVisible();
     }
+    @When("User makes search by keyword {string}")
+    public void userMakesSearchByKeywordKeyword(final String searchText) {
+        homePage.enterTextToSearchField(searchText);
+    }
 
+    @And("User clicks search button")
+    public void userClicksSearchButton() { homePage.clickSearchButton();}
 
+    @And("User check that search page contains {string}")
+    public void userCheckThatSearchPageContainsSearchTitle(final String expectedTitle) {
+        searchResultPage = pageFactoryManager.getSearchResultPage();
+        searchResultPage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
+        searchResultPage.waitVisibilityOfElement(DEFAULT_TIMEOUT, searchResultPage.getTitle());
+        assertTrue(searchResultPage.getTextOfSearchResultTitle().equalsIgnoreCase(expectedTitle));
+//assertEquals(expectedTitle, searchResultPage.getTextOfSearchResultTitle().toLowerCase());
+    }
+    @And("User selects sort price high to low")
+    public void userSelectsSortPriceHighToLow() throws InterruptedException {
+        searchResultPage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
+        searchResultPage.waitVisibilityOfElement(DEFAULT_TIMEOUT, searchResultPage.getSortButton());
+        Thread.sleep(6000);
+        searchResultPage.clickSortButton();
+        searchResultPage.waitVisibilityOfElement(DEFAULT_TIMEOUT, searchResultPage.getPriceHighToLowButton());
+        searchResultPage.clickSortPriceHighToLowButton();
+        Thread.sleep(6000);
+    }
+
+    @And("User checks that first product is most expensive")
+    public void userChecksThatFirstProductIsMostExpensive() {
+        searchResultPage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
+        searchResultPage.waitVisibilityOfElement(DEFAULT_TIMEOUT, searchResultPage.getFirstPrice());
+        firstPrice = Float.parseFloat(searchResultPage.getFirstPriceText().replaceAll("[^0-9]", ""));
+        secondPrice = Float.parseFloat(searchResultPage.getSecondPriceText().replaceAll("[^0-9]", ""));
+        assertTrue(firstPrice >= secondPrice);
+    }
 
     @After
     public void tearDown() {

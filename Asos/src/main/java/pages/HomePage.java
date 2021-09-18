@@ -23,6 +23,9 @@ public class HomePage extends BasePage{
     @FindBy(xpath = "//input[@type ='search']")
     private WebElement searchField;
 
+    @FindBy(xpath = "//button[@type ='submit'  and @data-testid ='search-button-inline']")
+    private WebElement searchButton;
+
 
 
     public HomePage(WebDriver driver) { super(driver);}
@@ -69,5 +72,14 @@ public class HomePage extends BasePage{
 
     public void isSearchFieldVisible() {
         searchField.isDisplayed();
+    }
+
+    public void enterTextToSearchField(final String searchText) {
+        searchField.clear();
+        searchField.sendKeys(searchText);
+    }
+
+    public void clickSearchButton() {
+        searchButton.click();
     }
 }
