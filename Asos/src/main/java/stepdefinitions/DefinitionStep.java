@@ -82,23 +82,24 @@ public class DefinitionStep {
         searchResultPage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
         searchResultPage.waitVisibilityOfElement(DEFAULT_TIMEOUT, searchResultPage.getTitle());
         assertTrue(searchResultPage.getTextOfSearchResultTitle().equalsIgnoreCase(expectedTitle));
-//assertEquals(expectedTitle, searchResultPage.getTextOfSearchResultTitle().toLowerCase());
     }
+
     @And("User selects sort price high to low")
-    public void userSelectsSortPriceHighToLow() throws InterruptedException {
+    public void userSelectsSortPriceHighToLow(){
+        searchResultPage = pageFactoryManager.getSearchResultPage();
         searchResultPage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
         searchResultPage.waitVisibilityOfElement(DEFAULT_TIMEOUT, searchResultPage.getSortButton());
-        Thread.sleep(6000);
         searchResultPage.clickSortButton();
         searchResultPage.waitVisibilityOfElement(DEFAULT_TIMEOUT, searchResultPage.getPriceHighToLowButton());
         searchResultPage.clickSortPriceHighToLowButton();
-        Thread.sleep(6000);
     }
 
     @And("User checks that first product is most expensive")
     public void userChecksThatFirstProductIsMostExpensive() {
         searchResultPage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
         searchResultPage.waitVisibilityOfElement(DEFAULT_TIMEOUT, searchResultPage.getFirstPrice());
+        searchResultPage.waitVisibilityOfElement(DEFAULT_TIMEOUT, searchResultPage.getSecondPrice());
+        searchResultPage.scrollTitllElementIsVisible(searchResultPage.getFirstPrice());
         firstPrice = Float.parseFloat(searchResultPage.getFirstPriceText().replaceAll("[^0-9]", ""));
         secondPrice = Float.parseFloat(searchResultPage.getSecondPriceText().replaceAll("[^0-9]", ""));
         assertTrue(firstPrice >= secondPrice);

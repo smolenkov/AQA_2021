@@ -44,6 +44,8 @@ public class SearchResultPage extends BasePage{
 
     public WebElement getFirstPrice() { return firstPrice; }
 
+    public WebElement getSecondPrice() { return secondPrice; }
+
     public String getFirstPriceText() { return firstPrice.getText(); }
 
     public String getSecondPriceText() { return secondPrice.getText(); }
