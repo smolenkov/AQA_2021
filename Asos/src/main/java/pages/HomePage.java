@@ -28,6 +28,9 @@ public class HomePage extends BasePage{
 
 
 
+
+
+
     public HomePage(WebDriver driver) { super(driver);}
 
     public void openHomePage(String url) {
@@ -82,4 +85,6 @@ public class HomePage extends BasePage{
     public void clickSearchButton() {
         searchButton.click();
     }
+
+
 }

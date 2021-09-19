@@ -28,14 +28,13 @@ public class DefinitionStep {
     ProductPage productPage;
     SavedPage savedPage;
     PageFactoryManager pageFactoryManager;
-    Float firstPrice, secondPrice;
+    Float firstPrice, secondPrice, lastPrice, temporary;
     String titleFirstSavedProduct;
 
     @Before
     public void testsSetUp() {
         chromedriver().setup();
-
-
+        driver = new ChromeDriver();
         driver.manage().window().maximize();
         pageFactoryManager = new PageFactoryManager(driver);
     }
@@ -89,44 +88,62 @@ public class DefinitionStep {
     }
 
     @And("User selects sort price high to low")
-    public void userSelectsSortPriceHighToLow(){
+    public void userSelectsSortPriceHighToLow() throws InterruptedException {
         searchResultPage = pageFactoryManager.getSearchResultPage();
         searchResultPage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
         searchResultPage.waitVisibilityOfElement(DEFAULT_TIMEOUT, searchResultPage.getSortButton());
+        searchResultPage.waitForAjaxToComplete(DEFAULT_TIMEOUT);
+
         searchResultPage.clickSortButton();
         searchResultPage.waitVisibilityOfElement(DEFAULT_TIMEOUT, searchResultPage.getPriceHighToLowButton());
+        searchResultPage.waitForAjaxToComplete(DEFAULT_TIMEOUT);
         searchResultPage.clickSortPriceHighToLowButton();
+        searchResultPage.waitForAjaxToComplete(DEFAULT_TIMEOUT);
+//        searchResultPage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
+        searchResultPage.waitVisibilityOfElement(DEFAULT_TIMEOUT, searchResultPage.getSortButton());
+        searchResultPage.clickSortButton();
+
+
+
     }
 
     @And("User checks that first product is most expensive")
-    public void userChecksThatFirstProductIsMostExpensive() {
+    public void userChecksThatFirstProductIsMostExpensive() throws InterruptedException {
+        searchResultPage = pageFactoryManager.getSearchResultPage();
         searchResultPage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
-        searchResultPage.waitVisibilityOfElement(DEFAULT_TIMEOUT, searchResultPage.getFirstPrice());
-        searchResultPage.waitVisibilityOfElement(DEFAULT_TIMEOUT, searchResultPage.getSecondPrice());
-        searchResultPage.scrollTitllElementIsVisible(searchResultPage.getFirstPrice());
-        firstPrice = Float.parseFloat(searchResultPage.getFirstPriceText().replaceAll("[^0-9]", ""));
-        secondPrice = Float.parseFloat(searchResultPage.getSecondPriceText().replaceAll("[^0-9]", ""));
-        assertTrue(firstPrice >= secondPrice);
+//        searchResultPage.waitVisibilityOfElement(DEFAULT_TIMEOUT, searchResultPage.getFirstPrice());
+//        searchResultPage.waitVisibilityOfElement(DEFAULT_TIMEOUT, searchResultPage.getSecondPrice());
+//        searchResultPage.waitVisibilityOfElement(DEFAULT_TIMEOUT, searchResultPage.getLastPrice());
+        searchResultPage.waitForAjaxToComplete(DEFAULT_TIMEOUT);
+        searchResultPage.waitVisibilityOfElement(DEFAULT_TIMEOUT, searchResultPage.getLastImage());
+        firstPrice = Float.parseFloat(searchResultPage.getFirstPriceText().replaceAll("[^0-9.]", ""));
+        secondPrice = Float.parseFloat(searchResultPage.getSecondPriceText().replaceAll("[^0-9.]", ""));
+        assertTrue("error,  firstprice="+firstPrice+"  secondprise="+secondPrice+" ",firstPrice >= secondPrice);
+
     }
 
     @And("User adds first product to saved page")
-    public void userAddsFirstProductToSavedPage() {
+    public void userAddsFirstProductToSavedPage(){
+        searchResultPage = pageFactoryManager.getSearchResultPage();
         searchResultPage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
         searchResultPage.waitVisibilityOfElement(DEFAULT_TIMEOUT, searchResultPage.getFirstSaveProductTitle());
         searchResultPage.waitVisibilityOfElement(DEFAULT_TIMEOUT, searchResultPage.getFirstSaveButton());
+        searchResultPage.scrollTitllElementIsVisible(searchResultPage.getFirstSaveButton());
         titleFirstSavedProduct =searchResultPage.getFirstSaveProductTitleText();
-        searchResultPage.clickFirstSaveButton();
+        searchResultPage.clickOnElement(searchResultPage.getFirstSaveButton());
+
 
     }
 
     @And("User opens saved page")
     public void userOpensSavedPage() {
         savedPage = pageFactoryManager.getSavedPage();
+        searchResultPage.clickGoToSaveListButton();
         savedPage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
     }
 
     @And("User checks that product contains on saved page")
-    public void userChecksThatProductContainsOnSavedPage() {
+    public void userChecksThatProductContainsOnSavedPage(){
         savedPage.waitVisibilityOfElement(DEFAULT_TIMEOUT, savedPage.getTitleSavedProduct());
         assertTrue(savedPage.getTextOfTitleSavedProduct().equalsIgnoreCase(titleFirstSavedProduct));
     }
