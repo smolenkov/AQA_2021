@@ -35,3 +35,16 @@ Feature: Smoke
         |url                         |keyword     |
         |https://www.asos.com/women/ |Dr Martens  |
         |https://www.asos.com/men/   |Dr Martens  |
+
+  Scenario Outline: Add product to saved page
+    Given User opens '<url>' page
+    And User checks search field visibility
+    When User makes search by keyword '<keyword>'
+    And User clicks search button
+    And User adds first product to saved page
+    And User opens saved page
+    And User checks that product contains on saved page
+    Examples:
+      | url                        | keyword |
+      |https://www.asos.com/women/ |Dr Martens  |
+      |https://www.asos.com/men/   |Dr Martens  |

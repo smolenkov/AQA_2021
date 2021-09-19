@@ -11,6 +11,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 import pages.HomePage;
 import pages.ProductPage;
+import pages.SavedPage;
 import pages.SearchResultPage;
 
 import static io.github.bonigarcia.wdm.WebDriverManager.chromedriver;
@@ -25,13 +26,16 @@ public class DefinitionStep {
     HomePage homePage;
     SearchResultPage searchResultPage;
     ProductPage productPage;
+    SavedPage savedPage;
     PageFactoryManager pageFactoryManager;
     Float firstPrice, secondPrice;
+    String titleFirstSavedProduct;
 
     @Before
     public void testsSetUp() {
         chromedriver().setup();
-        driver = new ChromeDriver();
+
+
         driver.manage().window().maximize();
         pageFactoryManager = new PageFactoryManager(driver);
     }
@@ -103,6 +107,25 @@ public class DefinitionStep {
         firstPrice = Float.parseFloat(searchResultPage.getFirstPriceText().replaceAll("[^0-9]", ""));
         secondPrice = Float.parseFloat(searchResultPage.getSecondPriceText().replaceAll("[^0-9]", ""));
         assertTrue(firstPrice >= secondPrice);
+    }
+
+    @And("User adds first product to saved page")
+    public void userAddsFirstProductToSavedPage() {
+        searchResultPage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
+        titleFirstSavedProduct =searchResultPage.getFirstSaveProductTitleText();
+        searchResultPage.clickFirstSaveButton();
+
+    }
+
+    @And("User opens saved page")
+    public void userOpensSavedPage() {
+        savedPage = pageFactoryManager.getSavedPage();
+        savedPage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
+    }
+
+    @And("User checks that product contains on saved page")
+    public void userChecksThatProductContainsOnSavedPage() {
+        assertTrue(savedPage.getTextOfTitleSavedProduct().equalsIgnoreCase(titleFirstSavedProduct));
     }
 
     @After

@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import pages.HomePage;
 import pages.ProductPage;
 import pages.SearchResultPage;
+import pages.SavedPage;
 
 
 public class PageFactoryManager {
@@ -25,6 +26,10 @@ public class PageFactoryManager {
 
     public SearchResultPage getSearchResultPage() {
         return new SearchResultPage(driver);
+    }
+
+    public SavedPage getSavedPage() {
+        return new SavedPage(driver);
     }
 
 

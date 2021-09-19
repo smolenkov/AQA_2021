@@ -18,11 +18,18 @@ public class SearchResultPage extends BasePage{
     @FindBy(xpath = "//li[@id='plp_web_sort_price_high_to_low']")
     private WebElement sortPriceHighToLowButton;
 
-    @FindBy(xpath = "//span[@data-auto-id='productTilePrice']/span[1]")
+    @FindBy(xpath = "(//span[@data-auto-id='productTilePrice']/span)[1]")
     private WebElement firstPrice;
 
     @FindBy(xpath = "(//span[@data-auto-id='productTilePrice']/span)[2]")
     private WebElement secondPrice;
+
+    @FindBy(xpath = "(//button[@data-auto-id ='saveForLater'])[1]")
+    private WebElement firstSaveButton;
+
+    @FindBy(xpath = "(//div[@data-auto-id ='productTileDescription'])[1]//p")
+    private WebElement firstSaveProductTitle;
+
 
 
 
@@ -49,4 +56,12 @@ public class SearchResultPage extends BasePage{
     public String getFirstPriceText() { return firstPrice.getText(); }
 
     public String getSecondPriceText() { return secondPrice.getText(); }
+
+    public WebElement getFirstSaveButton() {return firstSaveButton;}
+
+    public void clickFirstSaveButton() { firstSaveButton.click(); }
+
+    public String getFirstSaveProductTitleText() { return firstSaveProductTitle.getText(); }
+
+
 }
