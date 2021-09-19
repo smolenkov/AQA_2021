@@ -15,4 +15,8 @@ public class SavedPage extends BasePage{
     public String getTextOfTitleSavedProduct() {
         return titleSavedProduct.getText();
     }
+
+    public WebElement getTitleSavedProduct() {
+        return titleSavedProduct;
+    }
 }

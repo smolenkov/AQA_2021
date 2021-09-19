@@ -57,9 +57,11 @@ public class SearchResultPage extends BasePage{
 
     public String getSecondPriceText() { return secondPrice.getText(); }
 
-    public WebElement getFirstSaveButton() {return firstSaveButton;}
+    public WebElement getFirstSaveButton() {return firstSaveButton; }
 
     public void clickFirstSaveButton() { firstSaveButton.click(); }
+
+    public WebElement getFirstSaveProductTitle() {return firstSaveProductTitle; }
 
     public String getFirstSaveProductTitleText() { return firstSaveProductTitle.getText(); }
 

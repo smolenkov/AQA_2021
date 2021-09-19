@@ -112,6 +112,8 @@ public class DefinitionStep {
     @And("User adds first product to saved page")
     public void userAddsFirstProductToSavedPage() {
         searchResultPage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
+        searchResultPage.waitVisibilityOfElement(DEFAULT_TIMEOUT, searchResultPage.getFirstSaveProductTitle());
+        searchResultPage.waitVisibilityOfElement(DEFAULT_TIMEOUT, searchResultPage.getFirstSaveButton());
         titleFirstSavedProduct =searchResultPage.getFirstSaveProductTitleText();
         searchResultPage.clickFirstSaveButton();
 
@@ -125,6 +127,7 @@ public class DefinitionStep {
 
     @And("User checks that product contains on saved page")
     public void userChecksThatProductContainsOnSavedPage() {
+        savedPage.waitVisibilityOfElement(DEFAULT_TIMEOUT, savedPage.getTitleSavedProduct());
         assertTrue(savedPage.getTextOfTitleSavedProduct().equalsIgnoreCase(titleFirstSavedProduct));
     }
 
