@@ -6,6 +6,7 @@ import pages.HomePage;
 import pages.ProductPage;
 import pages.SearchResultPage;
 import pages.SavedPage;
+import pages.SignUpPage;
 
 
 public class PageFactoryManager {
@@ -30,6 +31,10 @@ public class PageFactoryManager {
 
     public SavedPage getSavedPage() {
         return new SavedPage(driver);
+    }
+
+    public SignUpPage getSignUpPage() {
+        return new SignUpPage(driver);
     }
 
 

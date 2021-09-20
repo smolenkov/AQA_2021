@@ -26,6 +26,13 @@ public class HomePage extends BasePage{
     @FindBy(xpath = "//button[@type ='submit'  and @data-testid ='search-button-inline']")
     private WebElement searchButton;
 
+    @FindBy(xpath = "//div[@id='myAccountDropdown']/button")
+    private WebElement signUpDropDownButton;
+
+    @FindBy(xpath = "//div[@id='myaccount-dropdown']//a[@data-testid='myaccount-link']")
+    private WebElement goToSignUpPageButton;
+
+
 
 
 
@@ -50,8 +57,7 @@ public class HomePage extends BasePage{
     }
 
     public WebElement countryInList(String country) { return
-            driver.findElement(xpath("//select[@id='country']//option[contains(text(), '"+country+"')]"));
-    }
+            driver.findElement(xpath("//select[@id='country']//option[contains(text(), '"+country+"')]")); }
 
     public void clickToChooseCountry(String country) {
         countryInList(country).click();
@@ -79,11 +85,26 @@ public class HomePage extends BasePage{
 
     public void enterTextToSearchField(final String searchText) {
         searchField.clear();
-        searchField.sendKeys(searchText);
-    }
+        searchField.sendKeys(searchText); }
 
     public void clickSearchButton() {
         searchButton.click();
+    }
+
+    public void clickSignUpButton() {
+        signUpDropDownButton.click();
+    }
+
+    public WebElement getSignUpDropDownButton() {
+        return signUpDropDownButton;
+    }
+
+    public WebElement getGoToSignUpPageButton() {
+        return goToSignUpPageButton;
+    }
+
+    public void clickGoToSignUpButton() {
+        goToSignUpPageButton.click();
     }
 
 

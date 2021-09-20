@@ -9,10 +9,7 @@ import manager.PageFactoryManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-import pages.HomePage;
-import pages.ProductPage;
-import pages.SavedPage;
-import pages.SearchResultPage;
+import pages.*;
 
 import static io.github.bonigarcia.wdm.WebDriverManager.chromedriver;
 import static java.lang.Thread.sleep;
@@ -27,9 +24,11 @@ public class DefinitionStep {
     SearchResultPage searchResultPage;
     ProductPage productPage;
     SavedPage savedPage;
+    SignUpPage signUpPage;
     PageFactoryManager pageFactoryManager;
-    Float firstPrice, secondPrice, lastPrice, temporary;
+    Float firstPrice, secondPrice;
     String titleFirstSavedProduct;
+
 
     @Before
     public void testsSetUp() {
@@ -38,11 +37,13 @@ public class DefinitionStep {
         driver.manage().window().maximize();
         pageFactoryManager = new PageFactoryManager(driver);
     }
+
     @And ("User opens {string} page")
     public void openPage(final String url) {
         homePage = pageFactoryManager.getHomePage();
         homePage.openHomePage(url);
     }
+
     @And("User clicks choose country icon")
     public void userClicksChooseCountryIcon() {
         homePage.clickOnCountrySelectorButton();
@@ -77,7 +78,8 @@ public class DefinitionStep {
     }
 
     @And("User clicks search button")
-    public void userClicksSearchButton() { homePage.clickSearchButton();}
+    public void userClicksSearchButton() {
+        homePage.clickSearchButton();}
 
     @And("User check that search page contains {string}")
     public void userCheckThatSearchPageContainsSearchTitle(final String expectedTitle) {
@@ -88,38 +90,29 @@ public class DefinitionStep {
     }
 
     @And("User selects sort price high to low")
-    public void userSelectsSortPriceHighToLow() throws InterruptedException {
+    public void userSelectsSortPriceHighToLow() {
         searchResultPage = pageFactoryManager.getSearchResultPage();
         searchResultPage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
         searchResultPage.waitVisibilityOfElement(DEFAULT_TIMEOUT, searchResultPage.getSortButton());
         searchResultPage.waitForAjaxToComplete(DEFAULT_TIMEOUT);
-
         searchResultPage.clickSortButton();
         searchResultPage.waitVisibilityOfElement(DEFAULT_TIMEOUT, searchResultPage.getPriceHighToLowButton());
         searchResultPage.waitForAjaxToComplete(DEFAULT_TIMEOUT);
         searchResultPage.clickSortPriceHighToLowButton();
         searchResultPage.waitForAjaxToComplete(DEFAULT_TIMEOUT);
-//        searchResultPage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
         searchResultPage.waitVisibilityOfElement(DEFAULT_TIMEOUT, searchResultPage.getSortButton());
         searchResultPage.clickSortButton();
-
-
-
     }
 
     @And("User checks that first product is most expensive")
-    public void userChecksThatFirstProductIsMostExpensive() throws InterruptedException {
+    public void userChecksThatFirstProductIsMostExpensive()  {
         searchResultPage = pageFactoryManager.getSearchResultPage();
         searchResultPage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
-//        searchResultPage.waitVisibilityOfElement(DEFAULT_TIMEOUT, searchResultPage.getFirstPrice());
-//        searchResultPage.waitVisibilityOfElement(DEFAULT_TIMEOUT, searchResultPage.getSecondPrice());
-//        searchResultPage.waitVisibilityOfElement(DEFAULT_TIMEOUT, searchResultPage.getLastPrice());
         searchResultPage.waitForAjaxToComplete(DEFAULT_TIMEOUT);
         searchResultPage.waitVisibilityOfElement(DEFAULT_TIMEOUT, searchResultPage.getLastImage());
-        firstPrice = Float.parseFloat(searchResultPage.getFirstPriceText().replaceAll("[^0-9.]", ""));
-        secondPrice = Float.parseFloat(searchResultPage.getSecondPriceText().replaceAll("[^0-9.]", ""));
-        assertTrue("error,  firstprice="+firstPrice+"  secondprise="+secondPrice+" ",firstPrice >= secondPrice);
-
+        firstPrice = searchResultPage.getFirstPrice();
+        secondPrice = searchResultPage.getSecondPrice();
+        assertTrue("error:  firstprice="+firstPrice+"  secondprise="+secondPrice+" ",firstPrice >= secondPrice);
     }
 
     @And("User adds first product to saved page")
@@ -131,8 +124,6 @@ public class DefinitionStep {
         searchResultPage.scrollTitllElementIsVisible(searchResultPage.getFirstSaveButton());
         titleFirstSavedProduct =searchResultPage.getFirstSaveProductTitleText();
         searchResultPage.clickOnElement(searchResultPage.getFirstSaveButton());
-
-
     }
 
     @And("User opens saved page")
@@ -148,11 +139,34 @@ public class DefinitionStep {
         assertTrue(savedPage.getTextOfTitleSavedProduct().equalsIgnoreCase(titleFirstSavedProduct));
     }
 
+    @And("User click sign-up button")
+    public void userClickSignUpButton() {
+        homePage = pageFactoryManager.getHomePage();
+        homePage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
+        homePage.waitVisibilityOfElement(DEFAULT_TIMEOUT, homePage.getSignUpDropDownButton());
+        homePage.clickSignUpButton();
+        homePage.waitVisibilityOfElement(DEFAULT_TIMEOUT, homePage.getGoToSignUpPageButton());
+        homePage.waitForAjaxToComplete(DEFAULT_TIMEOUT);
+        homePage.clickGoToSignUpButton();
+    }
+
+    @And("User check that sign-up page is open")
+    public void userCheckThatSignUpPageIsOpen() {
+        signUpPage = pageFactoryManager.getSignUpPage();
+        signUpPage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
+        signUpPage.isSignInButtonVisible();
+    }
+
+    @And("User check that entered {string} is valid or displays an {string}")
+    public void userCheckThatEnteredEmailIsValidOrDisplaysAnError(String email, String error) {
+        signUpPage.enterTextToSearchField(email);
+        assertTrue(signUpPage.emailFieldResponse().contains(error));
+    }
+
     @After
     public void tearDown() {
         driver.close();
     }
-
 
 
 }

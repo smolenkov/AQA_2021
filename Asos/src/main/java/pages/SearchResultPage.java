@@ -103,6 +103,15 @@ public class SearchResultPage extends BasePage{
 
     public WebElement getLastImage() { return searchListImages.get(searchListImages.size()-1); }
 
+    public Float getSecondPrice() {
+        return Float.parseFloat(getSecondPriceText().replaceAll("[^0-9.]", ""));
+    }
+
+    public Float getFirstPrice() {
+        return Float.parseFloat(getFirstPriceText().replaceAll("[^0-9.]", ""));
+    }
+
+
 
 
 }
