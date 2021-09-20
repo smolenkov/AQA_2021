@@ -163,10 +163,41 @@ public class DefinitionStep {
         assertTrue(signUpPage.emailFieldResponse().contains(error));
     }
 
+    @And("User click on first product")
+    public void userClickOnFirstProduct() {
+        searchResultPage = pageFactoryManager.getSearchResultPage();
+        searchResultPage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
+        searchResultPage.waitVisibilityOfElement(DEFAULT_TIMEOUT, searchResultPage.getLastImage());
+        searchResultPage.scrollTitllElementIsVisible(searchResultPage.getFirstPriceLink());
+        searchResultPage.clickFirstPrice();
+
+    }
+
+    @And("User check that product page is opens")
+    public void userCheckThatProductPageIsOpens() {
+        productPage = pageFactoryManager.getProductPage();
+        productPage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
+    }
+
+    @And("User click on addToCart button")
+    public void userClickOnAddToCartButton() {
+        productPage.waitVisibilityOfElement(DEFAULT_TIMEOUT, productPage.getAddToCartButton());
+        productPage.clickAddToCartButton();
+    }
+
+    @And("User check that product is into the cart")
+    public void userCheckThatProductIsIntoTheCart() {
+        productPage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
+        productPage.waitVisibilityOfElement(DEFAULT_TIMEOUT, productPage.getCountOfProductInCart());
+        assertTrue(productPage.getCountOfProductInCartText().equalsIgnoreCase("1"));
+
+    }
+
     @After
     public void tearDown() {
         driver.close();
     }
+
 
 
 }

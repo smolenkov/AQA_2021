@@ -48,6 +48,15 @@ public class SearchResultPage extends BasePage{
     @FindBy(xpath = "//img[@data-auto-id='productTileImage']")
     private List<WebElement> searchListImages;
 
+
+    @FindBy(xpath = "//div[@role='region' and @data-testid='welcome-message']")
+    private List<WebElement> deliveryBanner;
+
+    @FindBy(xpath = "//div[@data-testid='welcome-message']//button[contains(@class, '_19qEA_b')]")
+    private WebElement deliveryButton;
+
+
+
 //    @FindBy(css="(span[class='_16nzq18']span[style='font-size: 14px'])[1]")
 //    private WebElement firstPrice;
 
@@ -73,15 +82,11 @@ public class SearchResultPage extends BasePage{
         return sortPriceHighToLowButton;
     }
 
-//    public WebElement getFirstPrice() { return firstPrice; }
-//
-//    public WebElement getSecondPrice() { return secondPrice; }
+    public void clickFirstPrice() {listFirstPrices.get(0).click(); }
+
+    public WebElement getFirstPriceLink() {return listFirstPrices.get(0); }
 
     public String getFirstPriceText() { return listFirstPrices.get(listFirstPrices.size()-1).getText();}
-
-            // Boolean isPresent = driver.findElements(By.yourLocator).size() > 0
-        // //div[@class='_1MVUcS8']  - скидка на фото
-
 
     public String getSecondPriceText() { return listSecondPrices.get(listSecondPrices.size()-1).getText(); }
 
@@ -110,6 +115,11 @@ public class SearchResultPage extends BasePage{
     public Float getFirstPrice() {
         return Float.parseFloat(getFirstPriceText().replaceAll("[^0-9.]", ""));
     }
+public void closeDeliveryBanner(){
+        if (deliveryBanner.size()!=0) deliveryButton.click();
+
+}
+
 
 
 

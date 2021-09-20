@@ -4,14 +4,14 @@ Feature: Smoke
   So that I can be sure that site works correctly
 
   Scenario Outline: Change language of the site
-    Given User opens <url> page
+    Given User opens '<url>' page
     And User clicks choose country icon
-    And User select country <country>
-    Then User checks that the inscription SHOPPING FROM: is changed on <inscription>
+    And User select country '<country>'
+    Then User checks that the inscription SHOPPING FROM: is changed on '<inscription>'
     Examples:
-      | url                           | country   | inscription     |
-      | 'https://www.asos.com/women/' | 'Germany' | 'EINKAUFEN AUS' |
-      | 'https://www.asos.com/men/'   | 'Italy'   | 'ACQUISTA DA'   |
+      | url                         | country | inscription     |
+      | https://www.asos.com/women/ | Germany | EINKAUFEN AUS |
+      | https://www.asos.com/men/   | Italy   | ACQUISTA DA   |
 
   Scenario Outline: Check the search results page
     Given User opens '<url>' page
@@ -35,10 +35,6 @@ Feature: Smoke
         |url                         |keyword     |
         |https://www.asos.com/women/ |Dr Martens  |
         |https://www.asos.com/men/   |Timberland  |
-        |https://www.asos.com/women/ |adidas      |
-        |https://www.asos.com/men/   |adidas      |
-        |https://www.asos.com/women/ |puma        |
-        |https://www.asos.com/men/   |puma        |
 
   Scenario Outline: Add product to saved page
     Given User opens '<url>' page
@@ -65,5 +61,17 @@ Feature: Smoke
         |https://www.asos.com/men/   | @               |Email fail! |
         |https://www.asos.com/women/ | just@example    |            |
         |https://www.asos.com/men/   | 1@@1            |Email fail! |
-        |https://www.asos.com/women/ | 1@1             |            |
-        |https://www.asos.com/men/   | _@_             |Email fail! |
+
+  Scenario Outline: Check the sorting of search results
+    Given User opens '<url>' page
+    And User checks search field visibility
+    When User makes search by keyword '<keyword>'
+    And User clicks search button
+    And User click on first product
+    And User check that product page is opens
+    And User click on addToCart button
+    And User check that product is into the cart
+    Examples:
+      |url                         |keyword     |
+      |https://www.asos.com/women/ |Sunglasses  |
+      |https://www.asos.com/men/   |Sunglasses  |
