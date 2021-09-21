@@ -14,7 +14,7 @@ public class Marketplace extends BasePage{
     public final String LINKS_ATTRIBUTE = "href";
     private int countOfBrokenLink;
 
-    @FindBy(xpath = "//a[string-length(@href) < 10]")
+    @FindBy(xpath = "//a[string-length(@href) < 10]")//   <10 -To save test time
     private List<WebElement> links;
 
 

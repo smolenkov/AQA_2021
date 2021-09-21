@@ -20,15 +20,9 @@ public class SearchResultPage extends BasePage{
     @FindBy(xpath = "//li[@id='plp_web_sort_price_high_to_low']")
     private WebElement sortPriceHighToLowButton;
 
-//    @FindBy(xpath = "(//span[@class='_16nzq18'])[1]")
-//    private WebElement firstPrice;
-
     @FindBy(xpath = "(//span[@class='_16nzq18'])[1]/../../span")
     private List<WebElement> listFirstPrices;
 
-
-//    @FindBy(xpath = "(//span[@class='_16nzq18'])[2]")
-//    private WebElement secondPrice;
 
     @FindBy(xpath = "(//span[@class='_16nzq18'])[1]/../../span")
     private List<WebElement> listSecondPrices;
@@ -42,9 +36,6 @@ public class SearchResultPage extends BasePage{
     @FindBy(xpath = "//a[contains(@href,'saved-list')]")
     private WebElement goToSaveListButton;
 
-//    @FindBy(xpath = "//span[@class='_16nzq18']")
-//    private List<WebElement> searchListPrices;
-//
     @FindBy(xpath = "//img[@data-auto-id='productTileImage']")
     private List<WebElement> searchListImages;
 

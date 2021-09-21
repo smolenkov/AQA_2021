@@ -6,7 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import java.util.concurrent.TimeUnit;
+
 
 
 public class BasePage {
@@ -28,11 +28,6 @@ public class BasePage {
                 webDriver -> ((JavascriptExecutor) webDriver).executeScript("return window.jQuery != undefined && jQuery.active == 0;"));
     }
 
-    public void waitForAjaxToCompletePdp(long timeToWait) {
-        new WebDriverWait(driver, timeToWait).until(
-                webDriver -> ((JavascriptExecutor) webDriver).executeScript("return window.jQuery != undefined && jQuery.active <=2;"));
-    }
-
     public void waitVisibilityOfElement(long timeToWait, WebElement element) {
         WebDriverWait wait = new WebDriverWait(driver, timeToWait);
         wait.until(ExpectedConditions.visibilityOf(element));
@@ -48,8 +43,6 @@ public class BasePage {
         JavascriptExecutor executor = (JavascriptExecutor) driver;
         executor.executeScript("arguments[0].scrollIntoView()", element);
     }
-    public void implicitWait(long timeToWait) {
-        driver.manage().timeouts().implicitlyWait(timeToWait, TimeUnit.SECONDS);
-    }
+
 }
 

@@ -4,16 +4,12 @@ package stepdefinitions;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
-import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 import manager.PageFactoryManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-
 import pages.*;
-
 import static io.github.bonigarcia.wdm.WebDriverManager.chromedriver;
-import static java.lang.Thread.sleep;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -251,13 +247,12 @@ public class DefinitionStep {
 
     @And("User clicks marketplace link")
     public void userClicksMarketplaceLink() {
-
+        homePage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
+        homePage.clickGoToMarketplace();
     }
 
     @And("User checks that some links on page isn't broken")
     public void userChecksThatSomeLinksOnPageIsnTBroken() {
-        homePage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
-        homePage.clickGoToMarketplace();
         marketplace = pageFactoryManager.getMarketplace();
         marketplace.waitForPageLoadComplete(DEFAULT_TIMEOUT);
         assertEquals(0, marketplace.findBrokenLinks());
@@ -269,15 +264,12 @@ public class DefinitionStep {
         emailContacts.waitForPageLoadComplete(DEFAULT_TIMEOUT);
         emailContacts.waitVisibilityOfElement(DEFAULT_TIMEOUT, emailContacts.getLastEmailAddress());
         assertEquals(0, emailContacts.checkEmailAddress());
-
     }
 
     @After
     public void tearDown() {
         driver.close();
     }
-
-
 }
 
 

@@ -22,7 +22,7 @@ public class EmailContacts extends BasePage {
     public int checkEmailAddress() {
 
         for (WebElement link : emailAddress) {
-            System.out.println(link.getText()+" "+!(Pattern.matches("([a-zA-Z0-9]+(?:[._+-][a-zA-Z0-9]+)*)@([a-zA-Z0-9]+(?:[.-][a-zA-Z0-9]+)*[.][a-zA-Z]{2,})", link.getText())));
+            System.out.println(link.getText()+" "+(Pattern.matches("([a-zA-Z0-9]+(?:[._+-][a-zA-Z0-9]+)*)@([a-zA-Z0-9]+(?:[.-][a-zA-Z0-9]+)*[.][a-zA-Z]{2,})", link.getText())));
             if (!(Pattern.matches("([a-zA-Z0-9]+(?:[._+-][a-zA-Z0-9]+)*)@([a-zA-Z0-9]+(?:[.-][a-zA-Z0-9]+)*[.][a-zA-Z]{2,})", link.getText()))) countWrongEmail++;
         }
         return countWrongEmail;

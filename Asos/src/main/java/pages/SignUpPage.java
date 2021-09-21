@@ -25,10 +25,6 @@ public class SignUpPage extends BasePage{
 
 
 
-
-
-//    public WebElement getSignButton() { return signInButton; }
-
     public void isSignInButtonVisible() {
         signInButton.isDisplayed();
     }
