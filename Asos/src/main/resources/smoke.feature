@@ -7,9 +7,10 @@ Feature: Smoke
     Given User opens '<url>' page
     And User clicks choose country icon
     And User select country '<country>'
+    And User clicks update preferences button
     Then User checks that the inscription SHOPPING FROM: is changed on '<inscription>'
     Examples:
-      | url                         | country | inscription     |
+      | url                         | country | inscription   |
       | https://www.asos.com/women/ | Germany | EINKAUFEN AUS |
       | https://www.asos.com/men/   | Italy   | ACQUISTA DA   |
 
@@ -53,7 +54,7 @@ Feature: Smoke
       |https://www.asos.com/women/ |Dr Martens  |
       |https://www.asos.com/men/   |Dr Martens  |
 
-    Scenario Outline: Check entry in the e-mail field
+    Scenario Outline: Check entry in the e-mail field (positive and negative)
       Given User opens '<url>' page
       And User clicks sign-up button
       And User checks that sign-up page is open
@@ -96,3 +97,18 @@ Feature: Smoke
       |url                         |keyword     |count |
       |https://www.asos.com/women/ |Sunglasses  |1     |
       |https://www.asos.com/men/   |Sunglasses  |1     |
+
+  Scenario Outline: Change of currency in product cards
+    Given User opens '<url>' page
+    And User clicks choose country icon
+    And User select country '<country>'
+    And User select currency '<currency>'
+    And User clicks update preferences button
+    And User checks search field visibility
+    When User makes search by keyword '<keyword>'
+    And User clicks search button
+    And User checks that prefix in price equals '<prefix>'
+    Examples:
+      | url                         | country | currency |keyword |prefix|
+      | https://www.asos.com/women/ | Japan   | USD      |cap     |$     |
+      | https://www.asos.com/men/   | Japan   | GBP      |cap     |£     |

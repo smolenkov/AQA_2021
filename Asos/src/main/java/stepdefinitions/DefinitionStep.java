@@ -38,7 +38,7 @@ public class DefinitionStep {
         pageFactoryManager = new PageFactoryManager(driver);
     }
 
-    @And ("User opens {string} page")
+    @And("User opens {string} page")
     public void openPage(final String url) {
         homePage = pageFactoryManager.getHomePage();
         homePage.openHomePage(url);
@@ -56,6 +56,22 @@ public class DefinitionStep {
         homePage.openListOfCountries();
         homePage.scrollTitllElementIsVisible(homePage.countryInList(country));
         homePage.clickToChooseCountry(country);
+        homePage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
+    }
+
+    @And("User select currency {string}")
+    public void userSelectCurrencyCurrency(final String currency) {
+        homePage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
+        homePage.waitVisibilityOfElement(DEFAULT_TIMEOUT, homePage.getListOfCurrency());
+        homePage.openListOfCurrency();
+        homePage.scrollTitllElementIsVisible(homePage.currencyInList(currency));
+        homePage.clickToChooseCurrency(currency);
+        homePage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
+    }
+
+
+    @And("User clicks update preferences button")
+    public void userClicksUpdatePreferencesButton() {
         homePage.waitVisibilityOfElement(DEFAULT_TIMEOUT, homePage.getApplyChangesButton());
         homePage.clickOnApplyChanges();
         homePage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
@@ -67,11 +83,21 @@ public class DefinitionStep {
         assertEquals(inscription, homePage.getTextOfSettingsInscription());
     }
 
+    @And("User checks that prefix in price equals {string}")
+    public void userChecksThatPrefixInPriceEqualsPrefix(String expectedPrefix) {
+        searchResultPage = pageFactoryManager.getSearchResultPage();
+        searchResultPage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
+        searchResultPage.waitForAjaxToComplete(DEFAULT_TIMEOUT);
+        searchResultPage.waitVisibilityOfElement(DEFAULT_TIMEOUT, searchResultPage.getLastImage());
+        assertTrue(searchResultPage.getFirstPriceText().contains(expectedPrefix));
+    }
+
     @And("User checks search field visibility")
     public void userChecksSearchFieldVisibility() {
         homePage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
         homePage.isSearchFieldVisible();
     }
+
     @When("User makes search by keyword {string}")
     public void userMakesSearchByKeywordKeyword(final String searchText) {
         homePage.enterTextToSearchField(searchText);
@@ -79,7 +105,8 @@ public class DefinitionStep {
 
     @And("User clicks search button")
     public void userClicksSearchButton() {
-        homePage.clickSearchButton();}
+        homePage.clickSearchButton();
+    }
 
     @And("User checks that search page contains {string}")
     public void userCheckThatSearchPageContainsSearchTitle(final String expectedTitle) {
@@ -105,24 +132,24 @@ public class DefinitionStep {
     }
 
     @And("User checks that first product is most expensive")
-    public void userChecksThatFirstProductIsMostExpensive()  {
+    public void userChecksThatFirstProductIsMostExpensive() {
         searchResultPage = pageFactoryManager.getSearchResultPage();
         searchResultPage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
         searchResultPage.waitForAjaxToComplete(DEFAULT_TIMEOUT);
         searchResultPage.waitVisibilityOfElement(DEFAULT_TIMEOUT, searchResultPage.getLastImage());
         firstPrice = searchResultPage.getFirstPrice();
         secondPrice = searchResultPage.getSecondPrice();
-        assertTrue("error:  firstprice="+firstPrice+"  secondprise="+secondPrice+" ",firstPrice >= secondPrice);
+        assertTrue("error:  firstprice=" + firstPrice + "  secondprise=" + secondPrice + " ", firstPrice >= secondPrice);
     }
 
     @And("User adds first product to saved page")
-    public void userAddsFirstProductToSavedPage(){
+    public void userAddsFirstProductToSavedPage() {
         searchResultPage = pageFactoryManager.getSearchResultPage();
         searchResultPage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
         searchResultPage.waitVisibilityOfElement(DEFAULT_TIMEOUT, searchResultPage.getFirstSaveProductTitle());
         searchResultPage.waitVisibilityOfElement(DEFAULT_TIMEOUT, searchResultPage.getFirstSaveButton());
         searchResultPage.scrollTitllElementIsVisible(searchResultPage.getFirstSaveButton());
-        titleFirstSavedProduct =searchResultPage.getFirstSaveProductTitleText();
+        titleFirstSavedProduct = searchResultPage.getFirstSaveProductTitleText();
         searchResultPage.clickOnElement(searchResultPage.getFirstSaveButton());
     }
 
@@ -135,7 +162,7 @@ public class DefinitionStep {
     }
 
     @And("User checks that product contains on saved page")
-    public void userChecksThatProductContainsOnSavedPage(){
+    public void userChecksThatProductContainsOnSavedPage() {
         savedPage.waitVisibilityOfElement(DEFAULT_TIMEOUT, savedPage.getTitleSavedProduct());
         assertTrue(savedPage.getTextOfTitleSavedProduct().equalsIgnoreCase(titleFirstSavedProduct));
     }
@@ -219,10 +246,16 @@ public class DefinitionStep {
         assertTrue(productPage.getCountOfEmptyCart().isDisplayed());
     }
 
+
+
     @After
     public void tearDown() {
         driver.close();
     }
 
+
+
 }
+
+
 

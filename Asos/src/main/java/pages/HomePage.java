@@ -11,6 +11,9 @@ public class HomePage extends BasePage{
     @FindBy(xpath = "//form//select[@id='country']")
     private WebElement listOfCountries;
 
+    @FindBy(xpath = "//form//select[@id='currency']")
+    private WebElement listOfCurrency;
+
     @FindBy(xpath = "(//button[@data-testid = 'country-selector-btn'])[1]")
     private WebElement countrySelectorButton;
 
@@ -36,8 +39,6 @@ public class HomePage extends BasePage{
 
 
 
-
-
     public HomePage(WebDriver driver) { super(driver);}
 
     public void openHomePage(String url) {
@@ -52,16 +53,25 @@ public class HomePage extends BasePage{
         return listOfCountries;
     }
 
+    public WebElement getListOfCurrency() { return listOfCurrency; }
+
     public void openListOfCountries() {
         listOfCountries.click();
     }
 
+    public void openListOfCurrency() { listOfCurrency.click(); }
+
     public WebElement countryInList(String country) { return
             driver.findElement(xpath("//select[@id='country']//option[contains(text(), '"+country+"')]")); }
+
+    public WebElement currencyInList(String currency) { return
+            driver.findElement(xpath("//select[@id='currency']//option[contains(text(), '"+currency+"')]")); }
 
     public void clickToChooseCountry(String country) {
         countryInList(country).click();
     }
+
+    public void clickToChooseCurrency(String currency) { currencyInList(currency).click(); }
 
     public WebElement getApplyChangesButton() {
         return applyChangesButton;
