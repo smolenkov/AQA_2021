@@ -8,6 +8,7 @@ import pages.SearchResultPage;
 import pages.SavedPage;
 import pages.SignUpPage;
 import pages.Marketplace;
+import pages.EmailContacts;
 
 
 public class PageFactoryManager {
@@ -39,6 +40,8 @@ public class PageFactoryManager {
     }
 
     public Marketplace getMarketplace() { return new Marketplace(driver); }
+
+    public  EmailContacts getEmailContacts() { return new EmailContacts(driver); }
 
 
 

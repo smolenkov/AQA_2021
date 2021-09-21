@@ -123,5 +123,4 @@ public class HomePage extends BasePage{
         marketplaceLink.click();
     }
 
-
 }

@@ -27,6 +27,7 @@ public class DefinitionStep {
     SavedPage savedPage;
     Marketplace marketplace;
     SignUpPage signUpPage;
+    EmailContacts emailContacts;
     PageFactoryManager pageFactoryManager;
     Float firstPrice, secondPrice;
     String titleFirstSavedProduct;
@@ -253,8 +254,8 @@ public class DefinitionStep {
 
     }
 
-    @And("User checks that all links on page isn't broken")
-    public void userChecksThatAllLinksOnPageIsnTBroken() {
+    @And("User checks that some links on page isn't broken")
+    public void userChecksThatSomeLinksOnPageIsnTBroken() {
         homePage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
         homePage.clickGoToMarketplace();
         marketplace = pageFactoryManager.getMarketplace();
@@ -262,6 +263,14 @@ public class DefinitionStep {
         assertEquals(0, marketplace.findBrokenLinks());
     }
 
+    @And("User checks that all e-mail links on page is valid")
+    public void userChecksThatAllEMailLinksOnPageIsValid() {
+        emailContacts = pageFactoryManager.getEmailContacts();
+        emailContacts.waitForPageLoadComplete(DEFAULT_TIMEOUT);
+        emailContacts.waitVisibilityOfElement(DEFAULT_TIMEOUT, emailContacts.getLastEmailAddress());
+        assertEquals(0, emailContacts.checkEmailAddress());
+
+    }
 
     @After
     public void tearDown() {

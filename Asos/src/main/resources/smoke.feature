@@ -47,12 +47,10 @@ Feature: Smoke
     And User checks that product contains on saved page
     Examples:
       | url                        | keyword    |
-      |https://www.asos.com/women/ |Dr Martens  |
+      |https://www.asos.com/women/ |Timberland  |
       |https://www.asos.com/men/   |Dr Martens  |
-      |https://www.asos.com/women/ |adidas      |
-      |https://www.asos.com/men/   |adidas      |
-      |https://www.asos.com/women/ |Dr Martens  |
-      |https://www.asos.com/men/   |Dr Martens  |
+
+
 
     Scenario Outline: Check entry in the e-mail field (positive and negative)
       Given User opens '<url>' page
@@ -116,9 +114,16 @@ Feature: Smoke
   Scenario Outline: Checking broken inner links
     Given User opens '<url>' page
     And User clicks marketplace link
-    And User checks that all links on page isn't broken
+    And User checks that some links on page isn't broken
     Examples:
       | url                         |
       | https://www.asos.com/women/ |
+
+  Scenario Outline: Checking site-map links
+    Given User opens '<url>' page
+    And User checks that all e-mail links on page is valid
+    Examples:
+      | url                                           |
+      | https://www.asosplc.com/media/global-contacts |
 
 

@@ -37,11 +37,6 @@ public class BasePage {
         WebDriverWait wait = new WebDriverWait(driver, timeToWait);
         wait.until(ExpectedConditions.visibilityOf(element));
     }
-//    public void waitLocatedOfElement(long timeToWait, WebElement element) {
-//        WebDriverWait wait = new WebDriverWait(driver, timeToWait);
-//        wait.until(ExpectedConditions.presenceOfElementLocated(element));
-//    }
-
 
     public void clickOnElement(WebElement element) {
         JavascriptExecutor executor = (JavascriptExecutor) driver;

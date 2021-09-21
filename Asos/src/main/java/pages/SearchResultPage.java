@@ -57,16 +57,6 @@ public class SearchResultPage extends BasePage{
 
 
 
-//    @FindBy(css="(span[class='_16nzq18']span[style='font-size: 14px'])[1]")
-//    private WebElement firstPrice;
-
-// driver.findElement(By.cssSelector("div[class='ajax_enabled'] [style='display:block']"));
-    // @FindBy(css="a[da-qid='inventory']")
-    // List<WebElement> elements;
-    // WebElement fsize = driver.findElement(By.id(“abc”)).getCssValue(“font-size”);
-
-
-
 
     public String getTextOfSearchResultTitle() { return titleSearchResult.getText(); }
 
@@ -82,10 +72,6 @@ public class SearchResultPage extends BasePage{
         return sortPriceHighToLowButton;
     }
 
-    public WebElement getGoToSaveListButton() {
-        return goToSaveListButton;
-    }
-
     public void clickFirstPrice() {listFirstPrices.get(0).click(); }
 
     public WebElement getFirstPriceLink() {return listFirstPrices.get(0); }
@@ -96,17 +82,11 @@ public class SearchResultPage extends BasePage{
 
     public WebElement getFirstSaveButton() {return firstSaveButton; }
 
-    public void clickFirstSaveButton() { firstSaveButton.click(); }
-
     public WebElement getFirstSaveProductTitle() {return firstSaveProductTitle; }
 
     public String getFirstSaveProductTitleText() { return firstSaveProductTitle.getText(); }
 
     public void clickGoToSaveListButton() { goToSaveListButton.click(); }
-
-//    public String getLastPriceText() { return searchListPrices.get(searchListPrices.size()).getText(); }
-//
-//    public WebElement getLastPrice() { return searchListPrices.get(searchListPrices.size()); }
 
     public WebElement getLastImage() { return searchListImages.get(searchListImages.size()-1); }
 
@@ -117,13 +97,6 @@ public class SearchResultPage extends BasePage{
     public Float getFirstPrice() {
         return Float.parseFloat(getFirstPriceText().replaceAll("[^0-9.]", ""));
     }
-public void closeDeliveryBanner(){
-        if (deliveryBanner.size()!=0) deliveryButton.click();
-
-}
-
-
-
 
 
 }
