@@ -81,7 +81,7 @@ public class DefinitionStep {
     public void userClicksSearchButton() {
         homePage.clickSearchButton();}
 
-    @And("User check that search page contains {string}")
+    @And("User checks that search page contains {string}")
     public void userCheckThatSearchPageContainsSearchTitle(final String expectedTitle) {
         searchResultPage = pageFactoryManager.getSearchResultPage();
         searchResultPage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
@@ -129,6 +129,7 @@ public class DefinitionStep {
     @And("User opens saved page")
     public void userOpensSavedPage() {
         savedPage = pageFactoryManager.getSavedPage();
+        searchResultPage.waitForAjaxToComplete(DEFAULT_TIMEOUT);
         searchResultPage.clickGoToSaveListButton();
         savedPage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
     }
@@ -139,7 +140,7 @@ public class DefinitionStep {
         assertTrue(savedPage.getTextOfTitleSavedProduct().equalsIgnoreCase(titleFirstSavedProduct));
     }
 
-    @And("User click sign-up button")
+    @And("User clicks sign-up button")
     public void userClickSignUpButton() {
         homePage = pageFactoryManager.getHomePage();
         homePage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
@@ -150,20 +151,20 @@ public class DefinitionStep {
         homePage.clickGoToSignUpButton();
     }
 
-    @And("User check that sign-up page is open")
+    @And("User checks that sign-up page is open")
     public void userCheckThatSignUpPageIsOpen() {
         signUpPage = pageFactoryManager.getSignUpPage();
         signUpPage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
         signUpPage.isSignInButtonVisible();
     }
 
-    @And("User check that entered {string} is valid or displays an {string}")
+    @And("User checks that entered {string} is valid or displays an {string}")
     public void userCheckThatEnteredEmailIsValidOrDisplaysAnError(String email, String error) {
         signUpPage.enterTextToSearchField(email);
         assertTrue(signUpPage.emailFieldResponse().contains(error));
     }
 
-    @And("User click on first product")
+    @And("User clicks on first product")
     public void userClickOnFirstProduct() {
         searchResultPage = pageFactoryManager.getSearchResultPage();
         searchResultPage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
@@ -173,32 +174,55 @@ public class DefinitionStep {
 
     }
 
-    @And("User check that product page is opens")
+    @And("User checks that product page is opens")
     public void userCheckThatProductPageIsOpens() {
         productPage = pageFactoryManager.getProductPage();
         productPage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
     }
 
-    @And("User click on addToCart button")
+    @And("User clicks on addToCart button")
     public void userClickOnAddToCartButton() {
         productPage.waitVisibilityOfElement(DEFAULT_TIMEOUT, productPage.getAddToCartButton());
         productPage.clickAddToCartButton();
     }
 
-    @And("User check that product is into the cart")
-    public void userCheckThatProductIsIntoTheCart() {
+    @And("User checks that count of product in cart is {string}")
+    public void userChecksThatCountOfProductInCartIsCount(String count) {
         productPage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
         productPage.waitVisibilityOfElement(DEFAULT_TIMEOUT, productPage.getCountOfProductInCart());
-        assertTrue(productPage.getCountOfProductInCartText().equalsIgnoreCase("1"));
+        assertTrue(productPage.getCountOfProductInCartText().equalsIgnoreCase(count));
 
+    }
+
+    @And("User clicks on cart icon")
+    public void userClicksOnCartIcon() {
+        productPage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
+        productPage.waitVisibilityOfElement(DEFAULT_TIMEOUT, productPage.getCountOfProductInCart());
+        productPage.clickCountOfProductInCart();
+        productPage.waitForAjaxToComplete(DEFAULT_TIMEOUT);
+
+    }
+
+    @And("User clicks on delete product button")
+    public void userClicksOnDeleteProductButton() {
+        productPage.waitForAjaxToComplete(DEFAULT_TIMEOUT);
+        productPage.waitVisibilityOfElement(DEFAULT_TIMEOUT, productPage.getDeleteProductButton());
+        productPage.clickDeleteProductButton();
+        productPage.waitForAjaxToComplete(DEFAULT_TIMEOUT);
+        productPage.waitVisibilityOfElement(DEFAULT_TIMEOUT, productPage.getDeleteProductButton());
+    }
+
+    @And("User checks that cart is empty")
+    public void userChecksThatCartIsEmpty() {
+        productPage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
+        productPage.waitVisibilityOfElement(DEFAULT_TIMEOUT, productPage.getCountOfEmptyCart());
+        assertTrue(productPage.getCountOfEmptyCart().isDisplayed());
     }
 
     @After
     public void tearDown() {
         driver.close();
     }
-
-
 
 }
 

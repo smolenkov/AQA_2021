@@ -16,6 +16,11 @@ public class ProductPage extends BasePage{
     @FindBy(xpath = "//span[@class='_1z5n7CN']")
     private WebElement countOfProductInCart;
 
+    @FindBy(xpath = "//span[@type='bagUnfilled']")
+    private WebElement countOfEmptyCart;
+
+    @FindBy(xpath = "//button[@aria-label='Delete this item']")
+    private WebElement deleteProductButton;
 
 
 
@@ -24,15 +29,27 @@ public class ProductPage extends BasePage{
 
 
 
-    public void clickAddToCartButton() {
+
+
+
+    public void clickAddToCartButton () {
         addToCartButton.click();
     }
 
-    public WebElement getAddToCartButton() {return addToCartButton; }
+    public WebElement getAddToCartButton () {return addToCartButton; }
 
-    public WebElement getCountOfProductInCart() {return countOfProductInCart; }
+    public WebElement getCountOfProductInCart () {return countOfProductInCart; }
 
-    public String getCountOfProductInCartText() { return countOfProductInCart.getText(); }
+    public WebElement getCountOfEmptyCart () {return countOfEmptyCart; }
+
+
+    public void clickCountOfProductInCart () { countOfProductInCart.click(); }
+
+    public String getCountOfProductInCartText () { return countOfProductInCart.getText(); }
+
+    public WebElement getDeleteProductButton () {return deleteProductButton; }
+
+    public void clickDeleteProductButton() {deleteProductButton.click(); }
 
 
 }

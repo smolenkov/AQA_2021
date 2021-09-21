@@ -13,18 +13,18 @@ Feature: Smoke
       | https://www.asos.com/women/ | Germany | EINKAUFEN AUS |
       | https://www.asos.com/men/   | Italy   | ACQUISTA DA   |
 
-  Scenario Outline: Check the search results page
+  Scenario Outline: Check  search results page
     Given User opens '<url>' page
     And User checks search field visibility
     When User makes search by keyword '<keyword>'
     And User clicks search button
-    And User check that search page contains '<search title>'
+    And User checks that search page contains '<search title>'
     Examples:
     |url                            |keyword              |search title       |
     |https://www.asos.com/men/      |Timberland boots     |"Timberland boots" |
     |https://www.asos.com/women/    |Cucumber             |"Cucumber"         |
 
-    Scenario Outline: Check the sorting of search results
+    Scenario Outline: Check  sorting of search results
       Given User opens '<url>' page
       And User checks search field visibility
       When User makes search by keyword '<keyword>'
@@ -45,15 +45,19 @@ Feature: Smoke
     And User opens saved page
     And User checks that product contains on saved page
     Examples:
-      | url                        | keyword |
+      | url                        | keyword    |
+      |https://www.asos.com/women/ |Dr Martens  |
+      |https://www.asos.com/men/   |Dr Martens  |
+      |https://www.asos.com/women/ |adidas      |
+      |https://www.asos.com/men/   |adidas      |
       |https://www.asos.com/women/ |Dr Martens  |
       |https://www.asos.com/men/   |Dr Martens  |
 
     Scenario Outline: Check entry in the e-mail field
       Given User opens '<url>' page
-      And User click sign-up button
-      And User check that sign-up page is open
-      And User check that entered '<email>' is valid or displays an '<error>'
+      And User clicks sign-up button
+      And User checks that sign-up page is open
+      And User checks that entered '<email>' is valid or displays an '<error>'
 
       Examples:
         | url                        | email           |error       |
@@ -62,16 +66,33 @@ Feature: Smoke
         |https://www.asos.com/women/ | just@example    |            |
         |https://www.asos.com/men/   | 1@@1            |Email fail! |
 
-  Scenario Outline: Check the sorting of search results
+  Scenario Outline: Check  adding product into the cart
     Given User opens '<url>' page
     And User checks search field visibility
     When User makes search by keyword '<keyword>'
     And User clicks search button
-    And User click on first product
-    And User check that product page is opens
-    And User click on addToCart button
-    And User check that product is into the cart
+    And User clicks on first product
+    And User checks that product page is opens
+    And User clicks on addToCart button
+    And User checks that count of product in cart is '<count>'
     Examples:
-      |url                         |keyword     |
-      |https://www.asos.com/women/ |Sunglasses  |
-      |https://www.asos.com/men/   |Sunglasses  |
+      |url                         |keyword     | count |
+      |https://www.asos.com/women/ |Sunglasses  |1      |
+      |https://www.asos.com/men/   |Sunglasses  |1      |
+
+  Scenario Outline: Сhecking if a product has been removed from the cart
+    Given User opens '<url>' page
+    And User checks search field visibility
+    When User makes search by keyword '<keyword>'
+    And User clicks search button
+    And User clicks on first product
+    And User checks that product page is opens
+    And User clicks on addToCart button
+    And User checks that count of product in cart is '<count>'
+    And User clicks on cart icon
+    And User clicks on delete product button
+    And User checks that cart is empty
+    Examples:
+      |url                         |keyword     |count |
+      |https://www.asos.com/women/ |Sunglasses  |1     |
+      |https://www.asos.com/men/   |Sunglasses  |1     |

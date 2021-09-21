@@ -82,6 +82,10 @@ public class SearchResultPage extends BasePage{
         return sortPriceHighToLowButton;
     }
 
+    public WebElement getGoToSaveListButton() {
+        return goToSaveListButton;
+    }
+
     public void clickFirstPrice() {listFirstPrices.get(0).click(); }
 
     public WebElement getFirstPriceLink() {return listFirstPrices.get(0); }
@@ -98,9 +102,7 @@ public class SearchResultPage extends BasePage{
 
     public String getFirstSaveProductTitleText() { return firstSaveProductTitle.getText(); }
 
-    public void clickGoToSaveListButton() {
-        goToSaveListButton.click();
-    }
+    public void clickGoToSaveListButton() { goToSaveListButton.click(); }
 
 //    public String getLastPriceText() { return searchListPrices.get(searchListPrices.size()).getText(); }
 //
