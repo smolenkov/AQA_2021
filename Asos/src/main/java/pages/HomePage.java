@@ -35,15 +35,17 @@ public class HomePage extends BasePage{
     @FindBy(xpath = "//div[@id='myaccount-dropdown']//a[@data-testid='myaccount-link']")
     private WebElement goToSignUpPageButton;
 
+    @FindBy(xpath = "//div[@data-testid='topbar']//a[contains(@href,'https://marketplace.asos.com')]")
+    private WebElement marketplaceLink;
+
+
 
 
 
 
     public HomePage(WebDriver driver) { super(driver);}
 
-    public void openHomePage(String url) {
-        driver.get(url);
-    }
+    public void openHomePage(String url) { driver.get(url); }
 
     public void clickOnCountrySelectorButton() {
         countrySelectorButton.click();
@@ -115,6 +117,10 @@ public class HomePage extends BasePage{
 
     public void clickGoToSignUpButton() {
         goToSignUpPageButton.click();
+    }
+
+    public void clickGoToMarketplace() {
+        marketplaceLink.click();
     }
 
 

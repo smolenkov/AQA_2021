@@ -7,6 +7,7 @@ import pages.ProductPage;
 import pages.SearchResultPage;
 import pages.SavedPage;
 import pages.SignUpPage;
+import pages.Marketplace;
 
 
 public class PageFactoryManager {
@@ -36,6 +37,8 @@ public class PageFactoryManager {
     public SignUpPage getSignUpPage() {
         return new SignUpPage(driver);
     }
+
+    public Marketplace getMarketplace() { return new Marketplace(driver); }
 
 
 

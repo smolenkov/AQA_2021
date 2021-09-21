@@ -10,6 +10,7 @@ public class ProductPage extends BasePage{
     public ProductPage(WebDriver driver) {
         super(driver);
     }
+
     @FindBy(xpath = "//div[@class='add-item']/button")
     private WebElement addToCartButton;
 

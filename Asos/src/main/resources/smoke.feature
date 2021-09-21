@@ -112,3 +112,13 @@ Feature: Smoke
       | url                         | country | currency |keyword |prefix|
       | https://www.asos.com/women/ | Japan   | USD      |cap     |$     |
       | https://www.asos.com/men/   | Japan   | GBP      |cap     |£     |
+
+  Scenario Outline: Checking broken inner links
+    Given User opens '<url>' page
+    And User clicks marketplace link
+    And User checks that all links on page isn't broken
+    Examples:
+      | url                         |
+      | https://www.asos.com/women/ |
+
+

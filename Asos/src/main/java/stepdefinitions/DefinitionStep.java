@@ -4,6 +4,7 @@ package stepdefinitions;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 import manager.PageFactoryManager;
 import org.openqa.selenium.WebDriver;
@@ -24,6 +25,7 @@ public class DefinitionStep {
     SearchResultPage searchResultPage;
     ProductPage productPage;
     SavedPage savedPage;
+    Marketplace marketplace;
     SignUpPage signUpPage;
     PageFactoryManager pageFactoryManager;
     Float firstPrice, secondPrice;
@@ -246,13 +248,25 @@ public class DefinitionStep {
         assertTrue(productPage.getCountOfEmptyCart().isDisplayed());
     }
 
+    @And("User clicks marketplace link")
+    public void userClicksMarketplaceLink() {
+
+    }
+
+    @And("User checks that all links on page isn't broken")
+    public void userChecksThatAllLinksOnPageIsnTBroken() {
+        homePage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
+        homePage.clickGoToMarketplace();
+        marketplace = pageFactoryManager.getMarketplace();
+        marketplace.waitForPageLoadComplete(DEFAULT_TIMEOUT);
+        assertEquals(0, marketplace.findBrokenLinks());
+    }
 
 
     @After
     public void tearDown() {
         driver.close();
     }
-
 
 
 }
