@@ -7,8 +7,8 @@ import Task1.plane.hierarchy.Plane;
 import Task1.plane.hierarchy.PlaneCompare;
 
 public class Airline {
-    private String airlineName;
-    private List<Plane> planes = new ArrayList<>();
+    private final String airlineName;
+    private final List<Plane> planes = new ArrayList<>();
 
     public Airline(String airlineName) {
         this.airlineName = airlineName;
@@ -16,10 +16,6 @@ public class Airline {
 
     public String getAirlineName() {
         return airlineName;
-    }
-
-    public void setAirlineName(String airlineName) {
-        this.airlineName = airlineName;
     }
 
     public void addPlane(Plane plane) {
@@ -65,7 +61,7 @@ public class Airline {
     }
 
     private void showPlaneList(List<Plane> al) {
-        System.out.println("======= " + this.getAirlineName() + " ======");
+        System.out.println("----- Airline '" + this.getAirlineName() + "' -----");
         for (Plane plane : al) {
             System.out.println(plane);
         }
